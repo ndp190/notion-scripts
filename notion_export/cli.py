@@ -8,7 +8,7 @@ def main(argv):
 
     try:
         opts, args = getopt.getopt(
-            argv, "hi:o:", ["notion-url=", "gg-key=", "gg-index"])
+            argv, "hi:o:", ["notion-url=", "gg-key=", "gg-index="])
     except getopt.GetoptError as e:
         print('notion_export --notion-url <notion-url> --gg-key <google-sheet-key> --gg-index <google-sheet-index>')
         sys.exit(2)
@@ -26,7 +26,7 @@ def main(argv):
     if None in (notion_url, gg_sheet_key, gg_sheet_index):
         print('notion_export --notion-url <notion-url> --gg-key <google-sheet-key> --gg-index <google-sheet-index>')
         sys.exit()
-
+    
     sprint_tasks = export_sprint_tasks(notion_url)
     import_sprint_tasks(sprint_tasks, gg_sheet_key, gg_sheet_index)
 

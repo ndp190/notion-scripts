@@ -8,9 +8,8 @@ def import_sprint_tasks(sprint_tasks, google_sheet_key, google_sheet_index):
         'client_secrets.json', scopes=scope)
     gc = gspread.authorize(credentials)
     wks = gc.open_by_key(google_sheet_key)
-    worksheet = wks.get_worksheet(google_sheet_index)
+    worksheet = wks.get_worksheet(int(google_sheet_index))
     
-    # TODO check for worksheet empty or not
     if worksheet.row_values(1) == []:
         worksheet.append_row(
             ['id', 'title', 'app', 'epic', 'sprint', 'status', 'point', 'import_time'])
