@@ -29,6 +29,10 @@ def export_sprint_tasks(notion_url):
             if sprint in ['Backlog', '', None]:
                 continue
 
+            # filter out InTheFlow mission item
+            if row.get_property('mission')[0].title == 'InTheFlow':
+                continue
+
             sprint_tasks.append([
                 id,
                 title,
