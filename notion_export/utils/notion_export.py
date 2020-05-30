@@ -30,7 +30,7 @@ def export_sprint_tasks(notion_url):
                 continue
 
             # filter out not InTheFlow mission item
-            if row.get_property('mission')[0].title != 'InTheFlow':
+            if len(row.get_property('areas')) == 0 or row.get_property('areas')[0].title != 'In the Flow':
                 continue
 
             sprint_tasks.append([
