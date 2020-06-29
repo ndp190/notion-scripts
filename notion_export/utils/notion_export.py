@@ -21,13 +21,27 @@ def export_sprint_tasks(notion_url):
             for e in row.get_property('epic'):
                 epics.append('https://www.notion.so/' + e.id.replace('-',''))
             epic = "\n".join(epics)
-            sprint = row.get_property('sprint')
             status = row.get_property('status')
             points = row.get_property('points')
+            
+            should_skip = False
+            sprints = row.get_property('sprint')
+            if len(sprints) == 0:
+                should_skip = True
 
-            # filter out not-in-sprint item
-            if sprint in ['Backlog', '', None]:
+            sprint = []
+            for s in sprints:
+                if (s is None):
+                    continue
+                elif (s.title in ['Backlog', '', None]):
+                    should_skip = True
+                else:
+                    sprint.append(s.title)
+
+            if should_skip:
                 continue
+
+            sprint = "\n".join(sprint)
 
             # filter out not InTheFlow mission item
             if len(row.get_property('areas')) == 0 or row.get_property('areas')[0].title != 'InTheFlow':
@@ -58,5 +72,3 @@ def get_row_data(table_row):
         print("[Error] {0}".format(err))
         pass
     pass
-
-
